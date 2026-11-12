@@ -1,0 +1,735 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Анкета перед гинекологом</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Unbounded:wght@500;600&display=swap">
+<style>
+/* Одна спокойная колонка бланка до 640px: секции разделены линией, вопросы пронумерованы как в листе приёма, сверху липкая полоска прогресса */
+:root{
+  --bg:#F3F5F7;
+  --surface:#FFFFFF;
+  --fg:#17202B;
+  --muted:#5B6677;
+  --line:#D8DEE5;
+  --accent:#12676B;
+  --accent-soft:#E1EFEE;
+  --on-accent:#FFFFFF;
+  --warn-bg:#FFF4EA;
+  --warn-line:#EFC59F;
+  --warn-fg:#77330F;
+  --alert-bg:#FDEDEB;
+  --alert-line:#F0B6AF;
+  --alert-fg:#8C1E13;
+  --font-body:"Golos Text",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --font-display:"Unbounded","Golos Text",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1419;--surface:#161D25;--fg:#E5EAF0;--muted:#9AA6B5;--line:#2A3542;
+    --accent:#5DC1BC;--accent-soft:#14393A;--on-accent:#08201F;
+    --warn-bg:#31200F;--warn-line:#6A4322;--warn-fg:#F5CFAE;
+    --alert-bg:#3A1613;--alert-line:#7B2E26;--alert-fg:#FFB6AD;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1419;--surface:#161D25;--fg:#E5EAF0;--muted:#9AA6B5;--line:#2A3542;
+  --accent:#5DC1BC;--accent-soft:#14393A;--on-accent:#08201F;
+  --warn-bg:#31200F;--warn-line:#6A4322;--warn-fg:#F5CFAE;
+  --alert-bg:#3A1613;--alert-line:#7B2E26;--alert-fg:#FFB6AD;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.5;-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar-in{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:10px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:14px;color:var(--muted)}
+.bar-name{font-family:var(--font-display);font-weight:500;font-size:13px;letter-spacing:.04em;color:var(--fg)}
+.bar-count{font-variant-numeric:tabular-nums}
+.track{height:3px;background:var(--line)}
+.fill{height:100%;width:0;background:var(--accent);transition:width .25s ease}
+
+.wrap{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 64px;display:grid;gap:28px}
+.intro{display:grid;gap:12px}
+.intro h1{font-family:var(--font-display);font-weight:600;font-size:clamp(24px,6vw,32px);line-height:1.15;margin:0;text-wrap:balance}
+.intro p{margin:0;max-width:62ch}
+.note{color:var(--muted);font-size:15px}
+
+.urgent{background:var(--warn-bg);border:1px solid var(--warn-line);color:var(--warn-fg);border-radius:14px;padding:16px 18px;display:grid;gap:8px}
+.urgent-h{font-size:16px;font-weight:600;margin:0;text-wrap:balance}
+.urgent ul{margin:0;padding-left:20px;display:grid;gap:2px}
+.urgent p{margin:0}
+
+form{display:grid}
+.sec{display:grid;gap:26px;padding-block:28px;border-top:1px solid var(--line)}
+.sec-h{font-family:var(--font-display);font-weight:600;font-size:19px;line-height:1.25;margin:0;text-wrap:balance}
+.sec-sub{margin:-14px 0 0;color:var(--muted);font-size:15px;max-width:62ch}
+
+.q{border:0;margin:0;padding:0;min-width:0}
+.q legend{float:left;width:100%;padding:0;margin:0 0 12px;font-weight:600;font-size:17px;line-height:1.35}
+.q legend + *{clear:left}
+.qn{display:inline-block;min-width:2em;font-family:var(--font-display);font-weight:500;font-size:13px;color:var(--accent);font-variant-numeric:tabular-nums}
+.body{display:grid;gap:8px}
+
+.opt{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.opt input{flex:none;width:20px;height:20px;margin:2px 0 0;accent-color:var(--accent)}
+.opt span{min-width:0}
+.opt small{display:block;color:var(--muted);font-size:14px;line-height:1.35;margin-top:2px}
+.opt:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+.opt:has(input:focus-visible){outline:3px solid var(--accent);outline-offset:2px}
+
+.field{display:grid;gap:6px;margin-block:2px 6px}
+.field label,.lbl{font-size:15px;color:var(--muted)}
+input[type="date"],input[type="number"],input[type="text"],textarea{font:inherit;font-size:16px;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;max-width:100%;min-height:46px}
+input[type="date"]{max-width:240px}
+input[type="date"]::-webkit-date-and-time-value{text-align:left}
+input[type="number"]{max-width:140px}
+textarea{min-height:96px;resize:vertical;line-height:1.45}
+input:focus-visible,textarea:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+.hint{margin:0;color:var(--muted);font-size:15px}
+.hint.strong{color:var(--fg);font-weight:500}
+.alert{border-radius:12px;padding:14px 16px;font-weight:500;margin:0}
+.alert-urgent{background:var(--alert-bg);border:1px solid var(--alert-line);color:var(--alert-fg)}
+.alert-heavy{background:var(--warn-bg);border:1px solid var(--warn-line);color:var(--warn-fg)}
+
+.answers{display:grid;gap:14px;padding-top:28px;border-top:1px solid var(--line)}
+#out{min-height:300px;font-size:15px}
+.btn-row{display:flex;flex-wrap:wrap;gap:10px}
+.btn{font:inherit;font-weight:600;font-size:16px;min-height:48px;padding:0 20px;border-radius:12px;border:1px solid var(--accent);cursor:pointer;flex:1 1 220px}
+.btn-primary{background:var(--accent);color:var(--on-accent)}
+.btn-ghost{background:transparent;color:var(--accent)}
+.status{margin:0;min-height:1.5em;font-weight:500;color:var(--accent)}
+.reset{display:grid;gap:10px;justify-items:start}
+.linkbtn{font:inherit;font-size:15px;background:none;border:0;padding:4px 0;color:var(--muted);text-decoration:underline;cursor:pointer}
+.confirm{display:grid;gap:10px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface);width:100%}
+.confirm p{margin:0}
+@media (prefers-reduced-motion: reduce){.fill{transition:none}}
+</style>
+
+<div class="bar">
+  <div class="bar-in">
+    <span class="bar-name">Анкета</span>
+    <span class="bar-count" id="count">Заполнено 0 из 25</span>
+  </div>
+  <div class="track"><div class="fill" id="fill"></div></div>
+</div>
+
+<main class="wrap">
+  <header class="intro">
+    <h1>Анкета перед гинекологом</h1>
+    <p>Месячные идут дольше обычного. Твои ответы помогут понять, в чём может быть причина, и подготовиться к врачу. Это минут пять, почти везде достаточно нажать на вариант. Если чего-то не знаешь или не хочешь отвечать, просто пропусти.</p>
+    <p class="note">Ответы никуда не уходят сами. Внизу страницы они соберутся в текст, ты его скопируешь и отправишь папе. Черновик хранится только на этом устройстве.</p>
+  </header>
+
+  <aside class="urgent" aria-labelledby="urgent-h">
+    <p class="urgent-h" id="urgent-h">Не жди конца анкеты и сразу скажи маме или папе, если сейчас</p>
+    <ul>
+      <li>прокладка промокает насквозь за час или быстрее</li>
+      <li>кружится голова, темнеет в глазах, слабость до обморока</li>
+      <li>сильно колотится сердце или не хватает воздуха</li>
+      <li>сильная боль в животе или температура</li>
+    </ul>
+    <p>Это повод показаться врачу сегодня. При обмороке или очень сильной слабости звони 112.</p>
+  </aside>
+
+  <form id="f" novalidate>
+    <section class="sec" aria-labelledby="s1">
+      <h2 class="sec-h" id="s1">Эти месячные</h2>
+
+      <fieldset class="q" data-q="1" data-label="Начались">
+        <legend><span class="qn">1</span>Когда они начались?</legend>
+        <div class="body">
+          <input type="date" id="q1" name="q1" aria-label="Дата начала">
+          <p class="hint strong" id="q1-hint" hidden></p>
+        </div>
+      </fieldset>
+
+      <fieldset class="q" data-q="2" data-label="Идут сейчас">
+        <legend><span class="qn">2</span>Они ещё идут?</legend>
+        <div class="body">
+          <label class="opt"><input type="radio" name="q2" id="q2a" value="Да, идут"><span>Да, идут</span></label>
+          <label class="opt"><input type="radio" name="q2" id="q2b" value="Почти закончились, только мажет"><span>Почти закончились, только мажет</span></label>
+          <label class="opt"><input type="radio" name="q2" id="q2c" value="Закончились"><span>Закончились</span></label>
+          <div class="field" data-show-if="q2=Закончились" hidden>
+            <label for="q2end">Когда закончились</label>
+            <input type="date" id="q2end" name="q2end" data-sub="дата окончания">
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="q" data-q="3" data-label="Как шли">
+        <legend><span class="qn">3</span>Как они шли все эти дни?</legend>
+        <div class="body">
+          <label class="opt"><input type="radio" name="q3" id="q3a" value="Обильно почти всё время"><span>Обильно почти всё время</span></label>
+          <label class="opt"><input type="radio" name="q3" id="q3b" value="Первые дни как обычно, потом скудно"><span>Первые дни как обычно, потом скудно<small>коричневое или розовое, мажет</small></span></label>
+          <label class="opt"><input type="radio" name="q3" id="q3c" value="Волнами, то почти нет, то снова сильнее"><span>Волнами<small>то почти нет, то снова сильнее</small></span></label>
+          <label class="opt"><input type="radio" name="q3" id="q3d" value="По-другому"><span>По-другому</span></label>
+          <div class="field" data-show-if="q3=По-другому" hidden>
+            <label for="q3txt">Как именно</label>
+            <input type="text" id="q3txt" name="q3txt">
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="q" data-q="4" data-label="Смена прокладки в обильные дни">
+        <legend><span class="qn">4</span>В самые обильные дни как часто приходится менять прокладку или тампон?</legend>
+        <div class="body">
+          <label class="opt"><input type="radio" name="q4" id="q4a" value="Реже, чем раз в 3 часа"><span>Реже, чем раз в 3 часа</span></label>
+          <label class="opt"><input type="radio" name="q4" id="q4b" value="Раз в 2-3 часа"><span>Раз в 2-3 часа</span></label>
+          <label class="opt"><input type="radio" name="q4" id="q4c" value="Каждые 1-2 часа"><span>Каждые 1-2 часа</span></label>
+          <label class="opt"><input type="radio" name="q4" id="q4d" value="Промокает быстрее, чем за час"><span>Промокает быстрее, чем за час</span></label>
+          <label class="opt"><input type="checkbox" name="q4night" id="q4night" value="ночью протекает или приходится вставать"><span>Ночью протекает или приходится вставать менять</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="q" data-q="5" data-label="Сгустки">
+        <legend><span class="qn">5</span>Есть сгустки?</legend>
+        <div class="body">
+          <label class="opt"><input type="radio" name="q5" id="q5a" value="Нет"><span>Нет</span></label>
+          <label class="opt"><input type="radio" name="q5" id="q5b" value="Мелкие"><span>Мелкие</span></label>
+          <label class="opt"><input type="radio" name="q5" id="q5c" value="Крупные, больше 2,5 см"><span>Крупные, больше 2,5 см</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="q" data-q="6" data-label="Боль">
+        <legend><span class="qn">6</span>Болит живот?</legend>
+        <div class="body">
+          <label class="opt"><input type="radio" name="q6" id="q6a" value="Нет или слабо"><span>Нет или слабо</span></label>
+          <label class="opt"><input type="radio" name="q6" id="q6b" value="Как обычно на месячных"><span>Как обычно на месячных</span></label>
+          <label class="opt"><input type="radio" name="q6" id="q6c" value="Сильнее обычного"><span>Сильнее обычного</span></label>
+          <label class="opt"><input type="radio" name="q6" id="q6d" value="Очень сильно, таблетки не помогают"><span>Очень сильно, таблетки не помогают</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="q" data-q="7" data-label="Самочувствие">
+        <legend><span class="qn">7</span>Как ты себя чувствуешь последние дни? Отметь всё, что есть.</legend>
+        <div class="body">
+          <label class="opt"><input type="checkbox" name="q7" id="q7a" value="Устаю быстрее обычного"><span>Устаю быстрее обычного</span></label>
+          <label class="opt"><input type="checkbox" name="q7" id="q7b" value="Кружится голова или темнеет в глазах, когда встаю"><span>Кружится голова или темнеет в глазах, когда встаю</span></label>
+          <label class="opt"><input type="checkbox" name="q7" id="q7c" value="Сердцебиение или одышка"><span>Сердцебиение или одышка<small>например, на лестнице</small></span></label>
+          <label class="opt"><input type="checkbox" name="q7" id="q7d" value="Говорят, что я бледная"><span>Говорят, что я бледная</span></label>
+          <label class="opt"><input type="checkbox" name="q7" id="q7e" value="Температура"><span>Температура</span></label>
+          <label class="opt"><input type="checkbox" name="q7" id="q7f" value="Необычные выделения или запах"><span>Необычные выделения или неприятный запах</span></label>
+          <label class="opt"><input type="checkbox" name="q7" id="q7g" value="Всё как обычно" data-none><span>Всё как обычно</span></label>
+        </div>
+      </fieldset>
+      <p class="alert" id="alert-1" role="status" hidden></p>
+    </section>
+
+    <section class="sec" aria-labelledby="s2">
+      <h2 class="sec-h" id="s2">Цикл до этого</h2>
+
+      <fieldset class="q" data-q="8" data-label="Предыдущие начались">
+        <legend><span class="qn">8</span>Когда начались предыдущие месячные?</legend>
+        <div class="body">
+          <input type="date" id="q8" name="q8" aria-label="Дата начала предыдущих месячных">
+          <label class="opt"><input type="checkbox" name="q8unk" id="q8unk" value="не помню точно"><span>Не помню точно</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="q" data-q="9" data-label="Эти пришли">
+        <legend><span class="qn">9</span>Эти месячные пришли вовремя?</legend>
+        <div class="body">
+          <label class="opt"><input type="radio" name="q9" id="q9a" value="Примерно вовремя"><span>Примерно вовремя</span></label>
+          <label class="opt"><input type="radio" name="q9" id="q9b" value="С задержкой"><span>С задержкой</span></label>
+          <div class="field" data-show-if="q9=С задержкой" hidden>
+            <label for="q9delay">На сколько дней примерно</label>
+            <input type="number" id="q9delay" name="q9delay" min="1" max="120" inputmode="numeric" data-sub="примерно на" data-unit="дн.">
+          </div>
+          <label class="opt"><input type="radio" name="q9" id="q9c" value="Раньше срока"><span>Раньше срока</span></label>
+          <label class="opt"><input type="radio" name="q9" id="q9d" value="Не знаю"><span>Не знаю</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="q" data-q="10" data-label="Цикл обычно">
+        <legend><span class="qn">10</span>Обычно месячные приходят регулярно?</legend>
+        <div class="body">
+          <label class="opt"><input type="radio" name="q10" id="q10a" value="Регулярно"><span>Да, примерно через одинаковое число дней</span></label>
+          <label class="opt"><input type="radio" name="q10" id="q10b" value="Нерегулярно"><span>Нет, бывают задержки или приходят раньше</span></label>
+          <label class="opt"><input type="radio" name="q10" id="q10c" value="Не слежу"><span>Не слежу</span></label>
+          <div class="field">
+            <label for="q10len">Сколько дней обычно от начала одних месячных до начала следующих, если знаешь</label>
+            <input type="number" id="q10len" name="q10len" min="10" max="120" inputmode="numeric" data-sub="цикл" data-unit="дн.">
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="q" data-q="11" data-label="Обычно идут">
+        <legend><span class="qn">11</span>Сколько дней они обычно идут?</legend>
+        <div class="body">
+          <label class="opt"><input type="radio" name="q11" id="q11a" value="До 5 дней"><span>До 5 дней</span></label>
+          <label class="opt"><input type="radio" name="q11" id="q11b" value="5-7 дней"><span>5-7 дней</span></label>
+          <label class="opt"><input type="radio" name="q11" id="q11c" value="Больше 7 дней"><span>Больше 7 дней</span></label>
+          <label class="opt"><input type="radio" name="q11" id="q11d" value="По-разному"><span>По-разному</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="q" data-q="12" data-label="Так долго раньше">
+        <legend><span class="qn">12</span>Так долго, как сейчас, уже бывало?</legend>
+        <div class="body">
+          <label class="opt"><input type="radio" name="q12" id="q12a" value="Нет, впервые"><span>Нет, впервые</span></label>
+          <label class="opt"><input type="radio" name="q12" id="q12b" value="Бывало 1-2 раза"><span>Бывало 1-2 раза</span></label>
+          <label class="opt"><input type="radio" name="q12" id="q12c" value="Бывает часто"><span>Бывает часто</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="q" data-q="13" data-label="Первые месячные">
+        <legend><span class="qn">13</span>Во сколько лет начались самые первые месячные?</legend>
+        <div class="body">
+          <input type="number" id="q13" name="q13" min="8" max="18" inputmode="numeric" data-sub="в" data-unit="лет" aria-label="Возраст, лет">
+        </div>
+      </fieldset>
+
+      <fieldset class="q" data-q="14" data-label="Календарь в приложении">
+        <legend><span class="qn">14</span>Отмечаешь месячные в приложении-календаре?</legend>
+        <div class="body">
+          <label class="opt"><input type="radio" name="q14" id="q14a" value="Да"><span>Да</span></label>
+          <label class="opt"><input type="radio" name="q14" id="q14b" value="Нет"><span>Нет</span></label>
+          <p class="hint strong" data-show-if="q14=Да" hidden>Пришли папе скриншот календаря за последние 3-4 месяца, там точные даты.</p>
+        </div>
+      </fieldset>
+    </section>
+
+    <section class="sec" aria-labelledby="s3">
+      <h2 class="sec-h" id="s3">Лекарства и добавки</h2>
+
+      <fieldset class="q" data-q="15" data-label="Принимаю">
+        <legend><span class="qn">15</span>Что ты принимаешь сейчас или принимала за последние 2 месяца?</legend>
+        <div class="body">
+          <label class="opt"><input type="checkbox" name="q15" id="q15a" value="Препараты от гинеколога"><span>Препараты от гинеколога</span></label>
+          <label class="opt"><input type="checkbox" name="q15" id="q15b" value="Антидепрессант, успокоительное или таблетки на ночь"><span>Антидепрессант, успокоительное или таблетки на ночь</span></label>
+          <label class="opt"><input type="checkbox" name="q15" id="q15c" value="Гормональные таблетки или экстренная контрацепция"><span>Гормональные таблетки или экстренная контрацепция<small>например, Постинор</small></span></label>
+          <label class="opt"><input type="checkbox" name="q15" id="q15d" value="Обезболивающие"><span>Обезболивающие<small>ибупрофен, Нурофен, аспирин, Кеторол, Найз</small></span></label>
+          <label class="opt"><input type="checkbox" name="q15" id="q15e" value="Ингалятор от астмы"><span>Ингалятор от астмы</span></label>
+          <label class="opt"><input type="checkbox" name="q15" id="q15f" value="Магний, омега-3, витамины, железо"><span>Магний, омега-3, витамины, железо</span></label>
+          <label class="opt"><input type="checkbox" name="q15" id="q15g" value="Травы или травяные чаи"><span>Травы или травяные чаи</span></label>
+          <label class="opt"><input type="checkbox" name="q15" id="q15h" value="Ничего не принимаю" data-none><span>Ничего не принимаю</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="q" data-q="16" data-label="Названия и даты">
+        <legend><span class="qn">16</span>Напиши названия и с какого числа начала. Если что-то пропускала, меняла дозу или бросила, тоже напиши.</legend>
+        <div class="body">
+          <textarea id="q16" name="q16" rows="4" placeholder="Например: магний с весны по вечерам, ибупрофен 2 раза на этой неделе"></textarea>
+        </div>
+      </fieldset>
+    </section>
+
+    <section class="sec" aria-labelledby="s4">
+      <h2 class="sec-h" id="s4">Кровоточивость</h2>
+      <p class="sec-sub">Эти вопросы помогают понять, нормально ли сворачивается кровь.</p>
+
+      <fieldset class="q" data-q="17" data-label="У меня">
+        <legend><span class="qn">17</span>Бывает ли у тебя что-то из этого?</legend>
+        <div class="body">
+          <label class="opt"><input type="checkbox" name="q17" id="q17a" value="Месячные обильные с самых первых"><span>Месячные обильные с самых первых</span></label>
+          <label class="opt"><input type="checkbox" name="q17" id="q17b" value="Синяки сами, 1-2 раза в месяц и чаще"><span>Синяки появляются сами, без ударов, 1-2 раза в месяц и чаще</span></label>
+          <label class="opt"><input type="checkbox" name="q17" id="q17c" value="Кровь из носа 1-2 раза в месяц и чаще или долго не останавливается"><span>Кровь из носа 1-2 раза в месяц и чаще или долго не останавливается</span></label>
+          <label class="opt"><input type="checkbox" name="q17" id="q17d" value="Часто кровят дёсны"><span>Часто кровят дёсны при чистке зубов</span></label>
+          <label class="opt"><input type="checkbox" name="q17" id="q17e" value="Долго кровило после удаления зуба или операции"><span>Долго кровило после удаления зуба или операции</span></label>
+          <label class="opt"><input type="checkbox" name="q17" id="q17f" value="Врач говорил про низкий гемоглобин или нехватку железа"><span>Врач говорил про низкий гемоглобин или нехватку железа</span></label>
+          <label class="opt"><input type="checkbox" name="q17" id="q17g" value="Ничего из этого" data-none><span>Ничего из этого</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="q" data-q="18" data-label="У родных">
+        <legend><span class="qn">18</span>А у родных: мамы, бабушек, сестёр, тёть?</legend>
+        <div class="body">
+          <label class="opt"><input type="checkbox" name="q18" id="q18a" value="Обильные или долгие месячные"><span>Обильные или долгие месячные</span></label>
+          <label class="opt"><input type="checkbox" name="q18" id="q18b" value="Плохая свёртываемость, сильные кровотечения после родов или операций"><span>Плохая свёртываемость, сильные кровотечения после родов или операций</span></label>
+          <label class="opt"><input type="checkbox" name="q18" id="q18c" value="Не знаю" data-none><span>Не знаю, можно спросить маму</span></label>
+          <label class="opt"><input type="checkbox" name="q18" id="q18d" value="Ничего такого" data-none><span>Ничего такого</span></label>
+        </div>
+      </fieldset>
+    </section>
+
+    <section class="sec" aria-labelledby="s5">
+      <h2 class="sec-h" id="s5">Последние 2-3 месяца</h2>
+
+      <fieldset class="q" data-q="19" data-label="Было за 2-3 месяца">
+        <legend><span class="qn">19</span>Было ли что-то из этого?</legend>
+        <div class="body">
+          <label class="opt"><input type="checkbox" name="q19" id="q19a" value="Сильный стресс или переживания"><span>Сильный стресс или переживания</span></label>
+          <label class="opt"><input type="checkbox" name="q19" id="q19b" value="Переезд или смена обстановки"><span>Переезд или смена обстановки</span></label>
+          <label class="opt"><input type="checkbox" name="q19" id="q19c" value="Мало сплю или ложусь очень поздно"><span>Мало сплю или ложусь очень поздно</span></label>
+          <label class="opt"><input type="checkbox" name="q19" id="q19d" value="Ограничиваю еду или сижу на диете"><span>Ограничиваю еду или сижу на диете</span></label>
+          <label class="opt"><input type="checkbox" name="q19" id="q19e" value="Много тренировок"><span>Много тренировок</span></label>
+          <label class="opt"><input type="checkbox" name="q19" id="q19f" value="Болела, была температура"><span>Болела, была температура</span></label>
+          <label class="opt"><input type="checkbox" name="q19" id="q19g" value="Прыщей больше обычного"><span>Прыщей больше обычного</span></label>
+          <label class="opt"><input type="checkbox" name="q19" id="q19h" value="Волосы растут там, где раньше не росли"><span>Волосы стали расти там, где раньше не росли<small>лицо, живот, грудь</small></span></label>
+          <label class="opt"><input type="checkbox" name="q19" id="q19i" value="Мёрзну сильнее обычного, сухая кожа, выпадают волосы"><span>Мёрзну сильнее обычного, сухая кожа, выпадают волосы</span></label>
+          <label class="opt"><input type="checkbox" name="q19" id="q19j" value="Выделения из груди"><span>Выделения из груди</span></label>
+          <label class="opt"><input type="checkbox" name="q19" id="q19k" value="Ничего из этого" data-none><span>Ничего из этого</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="q" data-q="20" data-label="Вес">
+        <legend><span class="qn">20</span>Менялся ли вес за последние 3 месяца?</legend>
+        <div class="body">
+          <label class="opt"><input type="radio" name="q20" id="q20a" value="Не менялся"><span>Не менялся</span></label>
+          <label class="opt"><input type="radio" name="q20" id="q20b" value="Похудела"><span>Похудела</span></label>
+          <label class="opt"><input type="radio" name="q20" id="q20c" value="Поправилась"><span>Поправилась</span></label>
+          <label class="opt"><input type="radio" name="q20" id="q20d" value="Не знаю"><span>Не знаю</span></label>
+        </div>
+      </fieldset>
+    </section>
+
+    <section class="sec" aria-labelledby="s6">
+      <h2 class="sec-h" id="s6">Беременность</h2>
+      <p class="sec-sub">При любом необычном кровотечении врач первым делом исключает беременность. Этот вопрос задают всем. Проще всего сделать тест из аптеки.</p>
+
+      <fieldset class="q" data-q="21" data-label="Беременность">
+        <legend><span class="qn">21</span>Что из этого верно?</legend>
+        <div class="body">
+          <label class="opt"><input type="radio" name="q21" id="q21a" value="Точно исключена"><span>Беременность точно исключена</span></label>
+          <label class="opt"><input type="radio" name="q21" id="q21b" value="Тест отрицательный"><span>Сделала тест, он отрицательный</span></label>
+          <label class="opt"><input type="radio" name="q21" id="q21c" value="Тест положительный"><span>Сделала тест, он положительный</span></label>
+          <label class="opt"><input type="radio" name="q21" id="q21d" value="Тест ещё не делала, сделаю"><span>Ещё не делала тест, сделаю</span></label>
+          <label class="opt"><input type="radio" name="q21" id="q21e" value="Не хочу отвечать здесь, скажу врачу сама"><span>Не хочу отвечать здесь, скажу врачу сама</span></label>
+        </div>
+      </fieldset>
+      <p class="alert" id="alert-2" role="status" hidden></p>
+    </section>
+
+    <section class="sec" aria-labelledby="s7">
+      <h2 class="sec-h" id="s7">Врачи и анализы</h2>
+      <p class="sec-sub">Если знаешь.</p>
+
+      <fieldset class="q" data-q="22" data-label="Гинеколог">
+        <legend><span class="qn">22</span>Когда последний раз была у гинеколога? Что он сказал и что назначил?</legend>
+        <div class="body">
+          <textarea id="q22" name="q22" rows="3"></textarea>
+        </div>
+      </fieldset>
+
+      <fieldset class="q" data-q="23" data-label="УЗИ малого таза">
+        <legend><span class="qn">23</span>Делали УЗИ малого таза?</legend>
+        <div class="body">
+          <label class="opt"><input type="radio" name="q23" id="q23a" value="Да"><span>Да</span></label>
+          <div class="field" data-show-if="q23=Да" hidden>
+            <label for="q23txt">Когда и что сказали</label>
+            <input type="text" id="q23txt" name="q23txt">
+          </div>
+          <label class="opt"><input type="radio" name="q23" id="q23b" value="Нет"><span>Нет</span></label>
+          <label class="opt"><input type="radio" name="q23" id="q23c" value="Не помню"><span>Не помню</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="q" data-q="24" data-label="Анализы крови за полгода">
+        <legend><span class="qn">24</span>Сдавала анализы крови за последние полгода? Например, гемоглобин, ферритин, гормоны.</legend>
+        <div class="body">
+          <label class="opt"><input type="radio" name="q24" id="q24a" value="Да"><span>Да</span></label>
+          <p class="hint strong" data-show-if="q24=Да" hidden>Пришли папе фото бланков с результатами.</p>
+          <label class="opt"><input type="radio" name="q24" id="q24b" value="Нет"><span>Нет</span></label>
+          <label class="opt"><input type="radio" name="q24" id="q24c" value="Не помню"><span>Не помню</span></label>
+        </div>
+      </fieldset>
+    </section>
+
+    <section class="sec" aria-labelledby="s8">
+      <h2 class="sec-h" id="s8">Напоследок</h2>
+
+      <fieldset class="q" data-q="25" data-label="Ещё">
+        <legend><span class="qn">25</span>Что ещё важно? Что беспокоит больше всего?</legend>
+        <div class="body">
+          <textarea id="q25" name="q25" rows="4"></textarea>
+        </div>
+      </fieldset>
+    </section>
+  </form>
+
+  <section class="answers" aria-labelledby="ans-h">
+    <h2 class="sec-h" id="ans-h">Твои ответы</h2>
+    <p class="alert" id="alert-3" role="status" hidden></p>
+    <p class="hint">Проверь текст. Нажми Скопировать ответы, открой чат с папой в Telegram, вставь и отправь.</p>
+    <label class="lbl" for="out">Текст для отправки</label>
+    <textarea id="out" readonly rows="14" placeholder="Здесь соберутся ответы"></textarea>
+    <div class="btn-row">
+      <button type="button" class="btn btn-primary" id="copy">Скопировать ответы</button>
+      <button type="button" class="btn btn-ghost" id="share" hidden>Отправить через Поделиться</button>
+    </div>
+    <p class="status" id="status" aria-live="polite"></p>
+    <div class="reset">
+      <button type="button" class="linkbtn" id="reset">Стереть ответы и начать заново</button>
+      <div class="confirm" id="confirm" hidden>
+        <p>Стереть все ответы на этом устройстве?</p>
+        <div class="btn-row">
+          <button type="button" class="btn btn-ghost" id="reset-no">Не стирать</button>
+          <button type="button" class="btn btn-primary" id="reset-yes">Стереть</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  'use strict';
+  document.documentElement.lang = 'ru';
+
+  var KEY = 'anketa-gyn-v1';
+  var form = document.getElementById('f');
+  var out = document.getElementById('out');
+  var countEl = document.getElementById('count');
+  var fillEl = document.getElementById('fill');
+  var q1hint = document.getElementById('q1-hint');
+  var statusEl = document.getElementById('status');
+  var qs = Array.prototype.slice.call(document.querySelectorAll('.q'));
+  var TOTAL = qs.length;
+
+  var URGENT = 'Это повод показаться врачу сегодня. Скажи маме или папе прямо сейчас, не жди конца анкеты. При обмороке или очень сильной слабости звони 112.';
+  var HEAVY = 'Похоже на обильное кровотечение. К гинекологу лучше попасть в ближайшие дни, не откладывая.';
+  var PREG = 'При положительном тесте кровотечение нужно сегодня же показать врачу. Скажи маме или папе прямо сейчас.';
+
+  function byId(id) { return document.getElementById(id); }
+  function radioVal(name) {
+    var r = form.querySelector('input[name="' + name + '"]:checked');
+    return r ? r.value : '';
+  }
+  function fmtDate(v) {
+    var p = v.split('-');
+    return p.length === 3 ? p[2] + '.' + p[1] + '.' + p[0] : v;
+  }
+  function parseDate(v) {
+    if (!v) return null;
+    var p = v.split('-').map(Number);
+    if (p.length !== 3 || p.some(isNaN)) return null;
+    return new Date(p[0], p[1] - 1, p[2]);
+  }
+  function today() {
+    var t = new Date();
+    return new Date(t.getFullYear(), t.getMonth(), t.getDate());
+  }
+  function days(a, b) { return Math.round((b - a) / 86400000); }
+  function shown(el) { return !el.closest('[hidden]'); }
+
+  function partsOf(q) {
+    var parts = [];
+    var seen = {};
+    q.querySelectorAll('input, textarea').forEach(function (el) {
+      if (!shown(el)) return;
+      if (el.type === 'radio') {
+        if (el.checked) parts.push(el.value);
+        return;
+      }
+      if (el.type === 'checkbox') {
+        if (seen[el.name]) return;
+        seen[el.name] = true;
+        var vals = Array.prototype.slice.call(
+          q.querySelectorAll('input[type="checkbox"][name="' + el.name + '"]:checked')
+        ).map(function (c) { return c.value; });
+        if (vals.length) parts.push(vals.join(' / '));
+        return;
+      }
+      var v = el.value.trim();
+      if (!v) return;
+      var val = el.type === 'date' ? fmtDate(v) : v.replace(/\s*\n\s*/g, ' / ');
+      if (el.dataset.unit) val += ' ' + el.dataset.unit;
+      parts.push(el.dataset.sub ? el.dataset.sub + ' ' + val : val);
+    });
+    return parts;
+  }
+
+  function q1Extra() {
+    var s = parseDate(byId('q1').value);
+    if (!s) return '';
+    var e = parseDate(byId('q2end').value);
+    if (radioVal('q2') === 'Закончились' && e && e >= s) return 'шли ' + (days(s, e) + 1) + ' дн.';
+    var n = days(s, today()) + 1;
+    if (n >= 1 && n <= 90) return 'сегодня ' + n + '-й день';
+    return '';
+  }
+
+  function flags() {
+    var urgent = [];
+    var heavy = [];
+    if (radioVal('q4') === 'Промокает быстрее, чем за час') urgent.push('прокладка промокает быстрее, чем за час');
+    ['q7b', 'q7c', 'q7e'].forEach(function (id) {
+      var el = byId(id);
+      if (el.checked) urgent.push(el.value.toLowerCase());
+    });
+    if (radioVal('q6') === 'Очень сильно, таблетки не помогают') urgent.push('очень сильная боль');
+    if (radioVal('q21') === 'Тест положительный') urgent.push('тест на беременность положительный');
+    if (radioVal('q4') === 'Каждые 1-2 часа') heavy.push('смена прокладки каждые 1-2 часа');
+    if (byId('q4night').checked) heavy.push('ночью протекает');
+    if (radioVal('q5') === 'Крупные, больше 2,5 см') heavy.push('крупные сгустки');
+    return { urgent: urgent, heavy: heavy };
+  }
+
+  function setAlert(id, kind, text) {
+    var el = byId(id);
+    if (!kind) {
+      el.hidden = true;
+      el.textContent = '';
+      el.className = 'alert';
+      return;
+    }
+    el.hidden = false;
+    el.textContent = text;
+    el.className = 'alert ' + (kind === 'urgent' ? 'alert-urgent' : 'alert-heavy');
+  }
+
+  function renderAlerts(f) {
+    var pregnant = radioVal('q21') === 'Тест положительный';
+    var bodyUrgent = f.urgent.length - (pregnant ? 1 : 0);
+    if (bodyUrgent > 0) setAlert('alert-1', 'urgent', URGENT);
+    else if (f.heavy.length) setAlert('alert-1', 'heavy', HEAVY);
+    else setAlert('alert-1');
+    setAlert('alert-2', pregnant ? 'urgent' : '', PREG);
+    if (f.urgent.length) setAlert('alert-3', 'urgent', URGENT);
+    else if (f.heavy.length) setAlert('alert-3', 'heavy', HEAVY);
+    else setAlert('alert-3');
+  }
+
+  function stamp() {
+    var d = new Date();
+    function z(n) { return (n < 10 ? '0' : '') + n; }
+    return z(d.getDate()) + '.' + z(d.getMonth() + 1) + '.' + d.getFullYear() + ' ' + z(d.getHours()) + ':' + z(d.getMinutes());
+  }
+
+  function build(f) {
+    var lines = ['Анкета перед гинекологом, ' + stamp()];
+    function bullets(list) { return list.map(function (x) { return '- ' + x; }).join('\n'); }
+    if (f.urgent.length) lines.push('', 'ТРЕВОЖНЫЕ ПРИЗНАКИ', bullets(f.urgent));
+    if (f.heavy.length) lines.push('', 'ПОХОЖЕ НА ОБИЛЬНОЕ КРОВОТЕЧЕНИЕ', bullets(f.heavy));
+    var cur = null;
+    qs.forEach(function (q) {
+      var sec = q.closest('section');
+      if (sec !== cur) {
+        cur = sec;
+        lines.push('', sec.querySelector('.sec-h').textContent.trim().toUpperCase());
+      }
+      var parts = partsOf(q);
+      if (q.dataset.q === '1') {
+        var x = q1Extra();
+        if (x) parts.push(x);
+      }
+      lines.push(q.dataset.q + '. ' + q.dataset.label + ': ' + (parts.length ? parts.join(', ') : 'нет ответа'));
+    });
+    return lines.join('\n');
+  }
+
+  function applyConditions() {
+    document.querySelectorAll('[data-show-if]').forEach(function (el) {
+      var p = el.getAttribute('data-show-if').split('=');
+      el.hidden = radioVal(p[0]) !== p[1];
+    });
+  }
+
+  function save() {
+    try {
+      var st = {};
+      form.querySelectorAll('input, textarea').forEach(function (el) {
+        if (!el.id) return;
+        st[el.id] = (el.type === 'radio' || el.type === 'checkbox') ? el.checked : el.value;
+      });
+      localStorage.setItem(KEY, JSON.stringify(st));
+    } catch (e) { /* хранилище недоступно, анкета работает и без него */ }
+  }
+
+  function restore() {
+    try {
+      var raw = localStorage.getItem(KEY);
+      if (!raw) return;
+      var st = JSON.parse(raw);
+      Object.keys(st).forEach(function (id) {
+        var el = byId(id);
+        if (!el || !form.contains(el)) return;
+        if (el.type === 'radio' || el.type === 'checkbox') el.checked = !!st[id];
+        else el.value = String(st[id]);
+      });
+    } catch (e) { /* нет черновика */ }
+  }
+
+  var saveTimer = null;
+  function update() {
+    applyConditions();
+    var f = flags();
+    out.value = build(f);
+    var n = 0;
+    qs.forEach(function (q) { if (partsOf(q).length) n++; });
+    countEl.textContent = 'Заполнено ' + n + ' из ' + TOTAL;
+    fillEl.style.width = Math.round(n / TOTAL * 100) + '%';
+    var x = q1Extra();
+    q1hint.hidden = !x;
+    q1hint.textContent = x ? x.charAt(0).toUpperCase() + x.slice(1) + (x.slice(-1) === '.' ? '' : '.') : '';
+    renderAlerts(f);
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(save, 250);
+  }
+
+  form.addEventListener('change', function (e) {
+    var t = e.target;
+    if (t.type === 'checkbox') {
+      var q = t.closest('.q');
+      var group = q ? q.querySelectorAll('input[type="checkbox"][name="' + t.name + '"]') : [];
+      if (t.checked && t.hasAttribute('data-none')) {
+        group.forEach(function (c) { if (c !== t) c.checked = false; });
+      } else if (t.checked) {
+        group.forEach(function (c) { if (c.hasAttribute('data-none')) c.checked = false; });
+      }
+    }
+    update();
+  });
+  form.addEventListener('input', update);
+  form.addEventListener('submit', function (e) { e.preventDefault(); });
+
+  function say(msg) { statusEl.textContent = msg; }
+
+  byId('copy').addEventListener('click', function () {
+    var text = build(flags());
+    out.value = text;
+    function ok() { say('Скопировано. Открой чат с папой в Telegram, вставь и отправь. Спасибо!'); }
+    function manual() {
+      out.focus();
+      out.select();
+      try { out.setSelectionRange(0, out.value.length); } catch (e) { /* не все браузеры */ }
+      var done = false;
+      try { done = document.execCommand('copy'); } catch (e) { done = false; }
+      if (done) ok();
+      else say('Автоматически скопировать не вышло. Текст в поле выделен, нажми Копировать.');
+    }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(ok, manual);
+      else manual();
+    } catch (e) { manual(); }
+  });
+
+  var shareBtn = byId('share');
+  if (navigator.share) {
+    shareBtn.hidden = false;
+    shareBtn.addEventListener('click', function () {
+      var text = build(flags());
+      try {
+        navigator.share({ text: text }).then(function () {
+          say('Готово. Проверь, что сообщение дошло до папы.');
+        }, function (err) {
+          if (err && err.name === 'AbortError') return;
+          say('Здесь Поделиться не работает. Нажми Скопировать ответы.');
+        });
+      } catch (e) {
+        say('Здесь Поделиться не работает. Нажми Скопировать ответы.');
+      }
+    });
+  }
+
+  var confirmBox = byId('confirm');
+  byId('reset').addEventListener('click', function () { confirmBox.hidden = false; });
+  byId('reset-no').addEventListener('click', function () { confirmBox.hidden = true; });
+  byId('reset-yes').addEventListener('click', function () {
+    form.reset();
+    try { localStorage.removeItem(KEY); } catch (e) { /* нечего стирать */ }
+    confirmBox.hidden = true;
+    say('Ответы стёрты.');
+    update();
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+  });
+
+  restore();
+  update();
+})();
+</script>
+</body></html>
